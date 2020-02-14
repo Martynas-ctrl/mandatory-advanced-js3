@@ -185,3 +185,8 @@ p {
 .todosStyle:hover {
   box-shadow: 0px 0px 8px 3px #66FCF1;
 }
+
+.errorMsgTodo {
+  color:#ED4337;
+  text-transform: uppercase;
+}

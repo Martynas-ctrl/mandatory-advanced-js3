@@ -5,7 +5,8 @@ import { token$ } from './Store';
 import FlipMove from 'react-flip-move';
 
 
-//In the constructor we have empty array todos that will hold data from the server. The text with empty string will hold the text user types in.
+//In the constructor we have empty array todos that will hold data from the server. The text with empty string will hold the text user types in. 
+//Also errorMsg and errorMsg1 will hold error message text when error occurs.
 export class TodoList extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +15,10 @@ export class TodoList extends Component {
             text: '',
             token: token$.value,
             hasError: false,
+            hasError1: false,
+            hasError2: false,
+            errorMsg: '',
+            errorMsg1: '',
         }
     }
 
@@ -48,8 +53,7 @@ export class TodoList extends Component {
                 })
            })
            this.state.text = '';
-        })
-        console.log(this.state.todos)   
+        })   
     }
     
     
@@ -69,7 +73,18 @@ export class TodoList extends Component {
             })
         })
         .catch((error) => {
-            console.log(error);
+            this.setState({
+                hasError1: true,
+            })
+            if(this.state.hasError1) {
+                this.setState({
+                    errorMsg: 'Oh no! Something went wrong, try to refresh the page'
+                })
+            }else{
+                this.setState({
+                    errorMsg: ''
+                })
+            }
         })
     }
     
@@ -92,8 +107,19 @@ export class TodoList extends Component {
             }) 
         })
         .catch((error) => {
-            console.log(error);
-        })
+            this.setState({
+                hasError2: true,
+            })
+            if(this.state.hasError2) {
+                this.setState({
+                    errorMsg1: 'Oh no! Something went wrong, try to refresh the page'
+                })
+            }else{
+                this.setState({
+                    errorMsg1: ''
+                })
+            }
+         })
       })
     }
 
@@ -136,6 +162,8 @@ export class TodoList extends Component {
                                  <FlipMove duration={300} easing='linear'>
                                     {addTodo}
                                  </FlipMove>
+                                 <h1 className='errorMsgTodo'>{this.state.errorMsg}</h1>
+                                 <h1 className='errorMsgTodo'>{this.state.errorMsg1}</h1>
                             </div>
                         </div>
                     </div>
@@ -144,4 +172,4 @@ export class TodoList extends Component {
     }
 }
 
-export default TodoList  
+export default TodoList 
